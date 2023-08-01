@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Scrotest
-//
-//  Created by 仲立 on 2020/5/12.
-//  Copyright © 2020 仲立. All rights reserved.
-//
 
 import UIKit
 
