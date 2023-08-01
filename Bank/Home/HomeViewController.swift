@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Scrotest
-//
-//  Created by 仲立 on 2020/5/12.
-//  Copyright © 2020 仲立. All rights reserved.
-//
 
 import UIKit
 import RxSwift
@@ -13,8 +6,10 @@ import FSPagerView
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var bageView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var barView: UIView!
     @IBOutlet weak var showAmountButton: UIButton!
     //USD
     @IBOutlet weak var usdView: UIView!
@@ -27,6 +22,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var adContentView: UIView!
     @IBOutlet weak var pageControlView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var favoriteEmptyView: UIView!
     
     var homeViewModel: HomeVMInterface!
     private var disposeBag = DisposeBag()
@@ -96,23 +93,39 @@ class HomeViewController: UIViewController {
             self.khuLabel.text = "\(result)".amount
         }).disposed(by: disposeBag)
         
+        //最愛的功能清單
         homeViewModel.getFavoriteListSubject
         .observeOn(MainScheduler.instance)
         .subscribe(onNext: { (result) in
+            self.favoriteEmptyView.isHidden = true
+            self.collectionView.isHidden = false
             self.favoriteList = result.data
             self.collectionView.reloadData()
         }).disposed(by: disposeBag)
-        homeViewModel.getFavoriteList()
         
+        
+        //輪播圖
         homeViewModel.getBannerListSubject
         .observeOn(MainScheduler.instance)
         .subscribe(onNext: { (result) in
             self.setTopAdLoopCell(array: result.data)
         }).disposed(by: disposeBag)
         homeViewModel.getBannerList()
+        
+        //推播清單
+        homeViewModel.getNotificationListSubject
+        .observeOn(MainScheduler.instance)
+        .subscribe(onNext: { (result) in
+            print("result: \(result)" )
+            self.bageView.isHidden = !(result.data.count > 0)
+        }).disposed(by: disposeBag)
     }
     
     func refreshAmount() {
+        isShowAmount = true
+        showAmountButton.setImage(UIImage(named: "iconEye01On"), for: .normal)
+        homeViewModel.getFavoriteList()
+        homeViewModel.getNotificationList()
         homeViewModel.getRefreshUSDTotal()
         homeViewModel.getRefreshKHRTotal()
     }
@@ -139,6 +152,19 @@ class HomeViewController: UIViewController {
     }
     
     func inttView() {
+        //通知紅點
+        bageView.isHidden = true
+        bageView.layer.cornerRadius = 5
+        
+        barView.layer.cornerRadius = 26
+        barView.layer.shadowColor = UIColor.gray.cgColor
+        barView.layer.shadowOpacity = 0.5
+        barView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        barView.layer.shadowRadius = 5
+        
+        self.favoriteEmptyView.isHidden = false
+        self.collectionView.isHidden = true
+        
         scrollView.delegate = self
         usdLabel.isHidden = true
         khuLabel.isHidden = true

@@ -10,6 +10,8 @@ import RxSwift
 import Foundation
 
 protocol HomeVMInterface {
+    func getNotificationList()
+    var getNotificationListSubject: PublishSubject<Result<[NotificationModel]>> {get}
     
     //Amount First
     func getFirstUSDTotal()
@@ -31,6 +33,7 @@ protocol HomeVMInterface {
 }
 
 class HomeVM {
+    var getNotificationListSubject = PublishSubject<Result<[NotificationModel]>>()
     var getFirstUSDTotalSubject = PublishSubject<Float>()
     var getFirstKHRTotalSubject = PublishSubject<Float>()
     var getRefreshUSDTotalSubject = PublishSubject<Float>()
@@ -41,19 +44,31 @@ class HomeVM {
     var amountRepository: AmountRepositoryInterface
     var favoriteRepository: FavoriteRepositoryInterface
     var bannerRepository: BannerRepositoryInterface
+    var notificationRepository: NotificationRepositoryInterface
     
     var disposeBag = DisposeBag()
     
     init(amountRepository: AmountRepositoryInterface = AmountRepository.shared,
          favoriteRepository: FavoriteRepositoryInterface = FavoriteRepository.shared,
-         bannerRepository: BannerRepositoryInterface = BannerRepository.shared) {
+         bannerRepository: BannerRepositoryInterface = BannerRepository.shared,
+         notificationRepository: NotificationRepositoryInterface = NotificationRepository.shared) {
         self.amountRepository = amountRepository
         self.favoriteRepository = favoriteRepository
         self.bannerRepository = bannerRepository
+        self.notificationRepository = notificationRepository
     }
     
 }
 extension HomeVM: HomeVMInterface {
+    
+    func getNotificationList() {
+        notificationRepository.getNotificationList()
+        .subscribe(onNext: { result in
+            self.getNotificationListSubject.onNext(result)
+        }, onError: { error in
+            print("getNotificationListSubject Error: \(error)")
+        }).disposed(by: disposeBag)
+    }
     
     func getFirstUSDTotal() {
         amountRepository.getFirstUSDTotal()

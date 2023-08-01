@@ -121,14 +121,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		713C67C82A764EAA00A7FD58 /* APImanager */ = {
+		713C67C82A764EAA00A7FD58 /* APIManager */ = {
 			isa = PBXGroup;
 			children = (
 				71B4FC532A76BC7A00645457 /* Repository */,
 				713C67D42A7652F800A7FD58 /* Entities */,
 				713C67D12A7651CA00A7FD58 /* APIProvider */,
 			);
-			path = APImanager;
+			path = APIManager;
 			sourceTree = "<group>";
 		};
 		713C67D12A7651CA00A7FD58 /* APIProvider */ = {
@@ -155,6 +155,24 @@
 				71B4FC6A2A76D37E00645457 /* AmountModel.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		716C5B8E2A776D8D006D5B8D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				71EEBFD6246A8D8C00C513E2 /* HomeViewController.swift */,
+				713C67D72A76551500A7FD58 /* HomeVM.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		716C5B8F2A776DA0006D5B8D /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				713C67D92A76B32900A7FD58 /* NotificationViewController.swift */,
+				71B4FC562A76BE3000645457 /* NotificationVM.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		71B4FC532A76BC7A00645457 /* Repository */ = {
@@ -190,17 +208,15 @@
 			isa = PBXGroup;
 			children = (
 				71EEBFD2246A8D8C00C513E2 /* AppDelegate.swift */,
-				71EEBFD6246A8D8C00C513E2 /* HomeViewController.swift */,
-				713C67D72A76551500A7FD58 /* HomeVM.swift */,
-				713C67D92A76B32900A7FD58 /* NotificationViewController.swift */,
-				71B4FC562A76BE3000645457 /* NotificationVM.swift */,
+				716C5B8E2A776D8D006D5B8D /* Home */,
+				716C5B8F2A776DA0006D5B8D /* Notification */,
 				71EEBFD8246A8D8C00C513E2 /* Main.storyboard */,
 				71EEBFDB246A8D8D00C513E2 /* Assets.xcassets */,
 				71EEBFDD246A8D8D00C513E2 /* LaunchScreen.storyboard */,
 				71EEBFE0246A8D8D00C513E2 /* Info.plist */,
 				713C67C32A764C5500A7FD58 /* View */,
 				713C67C02A764B3D00A7FD58 /* Helper */,
-				713C67C82A764EAA00A7FD58 /* APImanager */,
+				713C67C82A764EAA00A7FD58 /* APIManager */,
 			);
 			path = Bank;
 			sourceTree = "<group>";
@@ -511,8 +527,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbin.Bank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -531,8 +550,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbin.Bank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
